@@ -2,6 +2,8 @@
 
 [English](README.md) · **简体中文**
 
+**[体验 ASCII Camera](https://ascii.nine19een.com/)**
+
 在浏览器里，把摄像头画面实时转换成字符画。选择一种风格，与原画对比，再保存为截图、视频或 GIF。所有处理都在你的设备上完成。
 
 ![桌面界面：经典黑白风格与六张动态预设卡片](docs/assets/screenshots/desktop.zh-CN.webp)
@@ -68,6 +70,8 @@ npm run preview
 ## 浏览器支持
 
 摄像头需要 HTTPS 或 `localhost`。录制格式取决于浏览器的 MediaRecorder 和编码支持；应用会提供可用格式，不能录制 MP4 时回退到 WebM。
+
+iPhone Safari 的部分物理或组合摄像头可能不可用，不保证支持浏览器列出的每一种镜头。切换无法恢复时，请重新开启摄像头。Android 实机兼容性尚未验证。
 
 手机相册和系统播放器优先使用 MP4。iPhone 相册及部分播放器可能无法打开 WebM，长时间 WebM 录制也需要较多内存。录制时请保持标签页在前台。GIF 每帧最多 256 色。
 

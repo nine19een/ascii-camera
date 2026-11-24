@@ -2,6 +2,8 @@
 
 **English** · [简体中文](README.zh-CN.md)
 
+**[Try ASCII Camera](https://ascii.nine19een.com/)**
+
 Turn your camera into real-time ASCII art, right in your browser. Choose a look, compare it with the original, and save a screenshot, video or GIF. All processing stays on your device.
 
 ![Desktop view with the Classic Mono look and six live preset previews](docs/assets/screenshots/desktop.en.webp)
@@ -68,6 +70,8 @@ See the [implementation notes](docs/implementation.md) for rendering, camera lif
 ## Browser support
 
 Camera access requires HTTPS or `localhost`. Recording formats depend on the browser's MediaRecorder and codec support; the app offers supported formats and falls back to WebM when MP4 recording is unavailable.
+
+On iPhone Safari, some physical or combined camera entries may be unavailable; not every lens listed by the browser is supported. If a switch cannot be recovered, restart the camera. Android device compatibility has not been verified.
 
 MP4 is the preferred format for phone albums and system players. WebM may not open in iPhone Photos or some players, and long WebM recordings require substantial memory. Keep the tab in the foreground while recording. GIFs are limited to 256 colors per frame.
 
