@@ -33,18 +33,18 @@ registry 数据通过 `npm view gifenc@1.0.3` 取得，tarball 通过带 `--igno
 
 gifenc 没有记录精确导入的上游 commit，所以这里**不把 0dc2664 当成已证明的逐字导入版本**。它是同日、早于导入、作者版权年份相同且核心实现可交叉比对的历史快照。对比发现两者保留相同的 bin 链表、最近邻误差计算、堆合并与 palette 填充结构；gifenc 改为 ES 模块并增加选项 / packing 辅助及后续优化。这些证据支持按 MPL 处理其派生源文件，但不支持自行补出一个不存在的 MIT 再许可授权。
 
-## 3 生产分发义务与本轮落实
+## 3 生产分发义务与分发材料
 
 [MPL-2.0 第 3.1、3.2、3.3、3.4 节](https://www.mozilla.org/en-US/MPL/2.0/)要求保留相应源码许可及通知、告知接收者如何取得对应源码，并允许不同许可的独立文件组成较大作品。[Mozilla 官方 FAQ 的 Q8 至 Q11](https://www.mozilla.org/en-US/MPL/2.0/FAQ/)解释了这类库与独立代码组合的情形。
 
-本轮按此采取以下分发措施：
+项目采用以下分发措施：
 
 - 在 `public/vendor/gifenc-1.0.3/src/` 提供 **8 个准确的首选源文件**，逐字来自锁定 npm 包，不以压缩 JS 代替源代码；同时提供原 package.json、原 MIT 许可、历史 MPL-2.0 全文和 NOTICE。
 - NOTICE 明确 pnnquant2.js 的 PNN 派生部分按 MPL-2.0 提供；保留 gifenc 自身贡献的 MIT 通知及全部已有版权头，不把第三方源文件冒称为 ASCII Camera 原创。
 - Vite 生产输出会把这些文件逐字复制到 `dist/vendor/gifenc-1.0.3/`。GIF Worker 的发行文件头指向相邻的对应源码与完整通知，接收者无需申请账号或付费即可获取。
-- `public/third-party-licenses.txt`、中英文 README、需求基线均说明许可边界；根 LICENSE 和 package.json 的 MIT 继续用于 ASCII Camera 自有独立代码，未把整个应用改为 MPL。
+- `public/third-party-licenses.txt`、中英文 README 和本记录均说明许可边界；根 LICENSE 和 package.json 的 MIT 继续用于 ASCII Camera 自有独立代码，未把整个应用改为 MPL。
 - `source-manifest.json` 固定源码散列；`tools/audit/verify-third-party.mjs` 检查 npm 源码、发布 source map、随站点提供的源码、Worker 通知链接及 v1.0.0 版本一致性。
 
 gifenc 的包级 MIT 声明与 PNN 历史 MPL 记录均保留，不擅自改第三方 package.json 的历史声明。此处理落实本项目对所分发派生文件的源码及通知义务；不宣称获得额外的上游 MIT 授权，也不承诺追溯所有更早作者的独立授权文件。
 
-**E04 的本轮工程处置已完成：从“历史许可未核实”变为“历史 MPL 证据已固定，所分发对应源码与通知已提供并验证”。** 雕塑素材的公开仓库及展示再分发授权是独立事项，不由软件许可证解决。
+历史 MPL 证据、所分发对应源码与通知均保留在仓库中。雕塑素材适用独立授权，不由软件许可证解决，详见[演示素材授权记录](demo-material.zh-CN.md)。

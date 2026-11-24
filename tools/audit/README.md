@@ -1,4 +1,4 @@
-# Phase 06.3 本地复验
+# 本地复验工具
 
 在项目根目录运行。脚本只测试本地生产构建，生成文件放在 Git 已忽略的 `.audit-backup/`。使用虚拟摄像头，不采集个人摄像头画面，不执行 Git 写操作。
 
@@ -37,9 +37,9 @@ python tools/audit/verify-media.py
 
 FFmpeg 脚本使用 `-xerror`、`-fps_mode passthrough -enc_time_base demux` 保留输入时间基，检查完整解码、50% / 90% seek 后实际出帧，并逐包比较 fixture 改写前后的编码数据 SHA-256。输出 `media-results.json` 及本地首帧图。这里使用 FFmpeg 8.1.1；较旧版本可能不支持相同参数。
 
-脚本不会安装浏览器或依赖；缺少环境时应如实记录，不能把跳过记为通过。完整结论与限制见[审计报告](../../docs/audits/phase-06.3-audit-report.zh-CN.md)。
+脚本不会安装浏览器或依赖；缺少环境时应如实记录，不能把跳过记为通过。实现范围与限制见[技术实现说明](../../docs/implementation.zh-CN.md)。
 
-Phase 06.3.1 增加第三方源码分发校验，生产构建后运行：
+生产构建后运行第三方源码分发校验：
 
 ```powershell
 node tools/audit/verify-third-party.mjs
