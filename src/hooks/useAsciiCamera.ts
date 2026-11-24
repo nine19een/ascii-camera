@@ -148,6 +148,7 @@ export function useAsciiCamera() {
   /** 最近一次成功布局时画面来源的尺寸 */
   const laidOutRef = useRef({ width: 0, height: 0 })
   const switchingRef = useRef(false)
+  const switchingFromRef = useRef<MediaStream | null>(null)
   const switchLockedRef = useRef(false)
   const activeDeviceIdRef = useRef('')
   const preferredDeviceIdRef = useRef('')
@@ -349,7 +350,12 @@ export function useAsciiCamera() {
         if (!isCurrent()) return false
 
         // 摄像头被拔出、被系统收回或被其他程序抢占时，track 会触发 ended。
-        const onTrackEnded = () => fail(session, DISCONNECTED_ERROR)
+        const onTrackEnded = () => {
+          // iOS may end the old capture while getUserMedia is opening its replacement.
+          // Let the switch attach or restore a stream before treating that as a disconnect.
+          if (stream !== streamRef.current || stream === switchingFromRef.current) return
+          fail(session, DISCONNECTED_ERROR)
+        }
         const tracks = stream.getVideoTracks()
         for (const track of tracks) track.addEventListener('ended', onTrackEnded)
         detachTracksRef.current = () => {
@@ -466,6 +472,7 @@ export function useAsciiCamera() {
       const isCurrent = () => session === sessionRef.current
       const previousId = activeDeviceIdRef.current
       switchingRef.current = true
+      switchingFromRef.current = streamRef.current
       setSwitching(true)
       setNotice(null)
       try {
@@ -476,15 +483,17 @@ export function useAsciiCamera() {
         } catch (error) {
           if (!isCurrent()) return
           const described = describeCameraError(error)
-          if (described.code === 'not-found' || described.code === 'overconstrained') {
+          const previousEnded = !streamRef.current?.getVideoTracks().some((track) => track.readyState === 'live')
+          if (!previousEnded && (described.code === 'not-found' || described.code === 'overconstrained')) {
             setNotice({ kind: 'switch-unavailable' })
             return
           }
-          if (described.code !== 'not-readable') {
+          if (!previousEnded && described.code !== 'not-readable') {
             setNotice({ kind: 'switch-failed', error: described.code })
             return
           }
-          // 部分设备 / 驱动不允许同时打开两个摄像头：先释放旧流再重试。
+          // Exclusive drivers reject the new capture; iOS may instead end the old one.
+          // In either case release it, retry, and restore the previous device on failure.
           detachTracksRef.current?.()
           detachTracksRef.current = null
           stopStream(streamRef.current)
@@ -516,6 +525,7 @@ export function useAsciiCamera() {
           setPreferredDeviceId(deviceId)
         }
       } finally {
+        switchingFromRef.current = null
         switchingRef.current = false
         setSwitching(false)
       }

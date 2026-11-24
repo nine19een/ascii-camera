@@ -20,11 +20,14 @@ npm run preview -- --host 127.0.0.1 --port 4173 --strictPort
 $env:ASCII_AUDIT_PLAYWRIGHT = 'C:/path/to/node_modules/playwright'
 node tools/audit/browser-smoke.cjs
 node tools/audit/lifecycle-smoke.cjs
+node tools/audit/camera-switch-smoke.cjs
 ```
 
 `browser-smoke.cjs` 通过界面导出 PNG、两段连续 MP4、WebM 和 GIF；检查录制中切换预设、字符集、密度、语言、全屏、面板、摄像头开关，移动布局、轨道与 URL 清理，并断言请求来自本地同源。输出 `browser-results.json`。
 
 `lifecycle-smoke.cjs` 检查迟到的权限结果、失败的设备切换、轨道结束、页面离开后的 PNG 回调、视频失败后的海报、权限拒绝、模拟不支持元素全屏时的沉浸式返回，以及 GIF 10 秒自动停止。输出 `lifecycle-results.json`。模拟环境不等于 iPhone / Android 实机验收。
+
+`camera-switch-smoke.cjs` 使用虚拟摄像头模拟 iOS 在新请求期间结束旧轨道，覆盖成功切换、失败恢复、旧流仍存活时的不可用设备、独占重试、恢复失败、真实断线和切换期间停止。默认访问本地预览，输出 `.audit-backup/camera-switch-results.json`；可用 `ASCII_CAMERA_TEST_URL` 和 `ASCII_CAMERA_TEST_OUTPUT` 指定地址及输出路径。它验证事件顺序与资源释放，不替代真实 iPhone 镜头验收。
 
 使用 Node 22.22.1 生成 fixture 的最终容器，再使用本地 Python 3、FFmpeg / ffprobe 校验完整解码与定位：
 

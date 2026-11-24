@@ -18,7 +18,9 @@ The six preset previews share one demo video decoder. Each preview tick downsamp
 
 ## Camera and interface lifecycle
 
-Start, stop, errors, unmount and page exit advance a session number. Asynchronous camera operations check it after each await, releasing streams from obsolete requests. A device switch opens the new camera before releasing the old one; drivers that cannot open both trigger a release-and-retry path, with restoration of the original device if possible. Ended tracks return the view to the demo.
+Start, stop, errors, unmount and page exit advance a session number. Asynchronous camera operations check it after each await, releasing streams from obsolete requests. A device switch opens the new camera before releasing the old one; drivers that cannot open both trigger a release-and-retry path, with restoration of the original device if possible. Ended tracks outside a device switch return the view to the demo.
+
+iOS can end the previous track while opening another camera, as documented in [WebKit's camera concurrency discussion](https://bugs.webkit.org/show_bug.cgi?id=264288). The switch keeps a reference to that previous stream so its `ended` event cannot invalidate the replacement request; events from a replaced stream are also ignored. If the request fails after the old stream has ended, the release/retry/restore path runs even when the error normally means an unavailable device. Device selection uses the enumerated `deviceId` with an exact constraint; the default start prefers `facingMode: user`, without combining conflicting facing and device constraints. Physical and combined lens availability remains browser- and device-dependent.
 
 React manages interface and low-frequency state. Settings reach the renderer through refs; language changes update text without replacing the active camera or recorder. Camera frames and the demo share the same compare, freeze and export paths.
 
