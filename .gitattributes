@@ -1,0 +1,4 @@
+# Preserve the exact third-party source/license bytes recorded in source-manifest.json.
+/public/vendor/gifenc-1.0.3/** -text
+# Our parsed JSON metadata follows the repository's normal text conversion.
+/public/vendor/gifenc-1.0.3/source-manifest.json text
