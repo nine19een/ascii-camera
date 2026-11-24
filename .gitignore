@@ -1,0 +1,68 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies & build output
+node_modules
+dist
+dist-ssr
+*.tsbuildinfo
+.vite
+
+# Local HTTPS certificates (mkcert, see docs/mobile-testing.zh-CN.md)
+.cert
+
+# Local env files
+.env
+.env.*
+!.env.example
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Private keys / certificates anywhere in the tree (local HTTPS testing)
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.cer
+*.der
+
+# Audit backups made before release preparation (local only)
+.audit-backup/
+
+# Superseded copy snapshots (keep locally)
+/Claude outputs/
+
+# Test / tooling output
+coverage/
+test-results/
+playwright-report/
+
+# Exported files saved into the project folder while testing (ascii-camera-YYYYMMDD-HHMMSS.*)
+/ascii-camera-*.png
+/ascii-camera-*.mp4
+/ascii-camera-*.webm
+/ascii-camera-*.gif
+
+# Demo-video source material and grading intermediates (see docs/demo-video.zh-CN.md)
+*.mov
+*.MOV
+*.raw
+demo-build/

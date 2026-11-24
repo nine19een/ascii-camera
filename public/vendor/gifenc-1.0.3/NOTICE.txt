@@ -1,0 +1,35 @@
+Corresponding source for ASCII Camera's GIF Worker
+
+gifenc 1.0.3
+Published: 2021-03-07T11:09:20.659Z
+Release commit: 15e2c3e65ed03c977b42fec48de59b05ee9b9f54
+https://github.com/mattdesl/gifenc/tree/15e2c3e65ed03c977b42fec48de59b05ee9b9f54
+
+The src/ files and package.json are copied byte for byte from the locked npm
+package. src/ also matches sourcesContent in its published CJS and ESM maps.
+No algorithm or source edits have been made by ASCII Camera.
+
+The package declares MIT, Copyright (c) 2017 Matt DesLauriers.
+Its src/pnnquant2.js is a modification of PnnQuant.js, whose historical
+source and MPL-2.0 license are available at:
+https://github.com/mcychan/PnnQuant.js/tree/0dc2664d2d9582d1b6b492936bdd03687e385275
+This historical commit is dated 2021-02-25, before gifenc's import.
+
+The PNN-derived source in src/pnnquant2.js is made available under the Mozilla
+Public License, version 2.0. See LICENSE.MPL-2.0.txt. gifenc's contributions
+also retain the upstream package's MIT notice in LICENSE.MIT.txt.
+Other gifenc source files retain the package's MIT license and notices.
+
+Original PNN notices, also preserved in src/pnnquant2.js:
+Copyright (C) 2004-2019 Mark Tyler and Dmitry Groshev
+Copyright (c) 2018-2021 Miller Cy Chan
+
+The adaptation introduced an ES module interface, RGB packing helpers and
+options, followed by gifenc's 2021 optimizations. The exact imported upstream
+commit was not recorded by gifenc; the historical reference above is a
+verifiable pre-import snapshot, not an assertion of byte-identical import.
+
+This source is provided beside the production Worker, at no charge.
+Source and license rights under MPL-2.0 are not restricted by ASCII Camera's
+MIT license. ASCII Camera's own separate source files remain MIT licensed.
+See source-manifest.json for SHA-256 hashes of the exact source files.
